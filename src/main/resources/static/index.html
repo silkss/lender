@@ -1,10 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Lender: HomePage</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Lender HomePage</title>
 </head>
 <body>
-    <p>Get your greeting <a href="/greeting">here</a></p>
+    <nav>
+        <ul>
+            <li>
+                <ul>
+                    <li><a href="/loanrequest/create">Оставить заявку</a></li>
+                    <li><a href="/loanrequest/all">Список всех заявок</a></li>
+                </ul>
+            </li>
+            <li>
+                <ul>
+                    <li><a href="/user/all">Пользователи</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+    <h1>Проще позвонить, чем у кого-то заннимать!</h1>
 </body>
 </html>

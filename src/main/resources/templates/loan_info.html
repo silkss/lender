@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lender: Loan Information</title>
+</head>
+<body>
+    <h1 th:text="'О заявкe: ' + ${loan.id}" />
+    <p th:text="'состояние: ' + ${loan.decision.status}" />
+</body>
+</html>

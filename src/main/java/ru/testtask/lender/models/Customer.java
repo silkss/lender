@@ -1,13 +1,11 @@
 package ru.testtask.lender.models;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
+import ru.testtask.lender.types.MaritalStatus;
 
 import java.util.Date;
 
@@ -19,16 +17,19 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     private String name;
     private String surname;
     private String patronymic;
+    private MaritalStatus maritalStatus;
 
+    @Column(unique = true)
     private long passportNumber;
 
     private String address;
     private String phoneNumber;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date employmentStartDate;
     private String post;
     private String organizationName;
@@ -39,6 +40,7 @@ public class Customer {
             String name,
             String surname,
             String patronymic,
+            MaritalStatus maritalStatus,
             long passportNumber,
             String address,
             String phoneNumber,
@@ -48,6 +50,7 @@ public class Customer {
         this.name = name;
         this.surname = surname;
         this.patronymic = patronymic;
+        this.maritalStatus = maritalStatus;
         this.passportNumber = passportNumber;
         this.address = address;
         this.phoneNumber = phoneNumber;

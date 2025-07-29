@@ -5,17 +5,25 @@
     <title>Title</title>
 </head>
 <body>
-    <h1>Create loan request.</h1>
+    <h1>Cоздать запрос на кредит.</h1>
     <form action="#" th:action="@{/loan/request/create}" th:object="${loanRequestDto}" method="post">
-        <p>Имя: <input type="text" th:field="*{name}" /></p>
-        <p>Фамилия: <input type="text" th:field="*{surname}" /></p>
-        <p>Отчество: <input type="text" th:field="*{patronymic}"/></p>
-        <p>Номер паспорта: <input type="text" th:field="*{passportNumber}"/></p>
-        <p>Адресс: <input type="text" th:field="*{address}"/></p>
-        <p>Номер телефона: <input type="text" th:field="*{phoneNumber}" /></p>
-        <p>Дата начала работы: <input type="date" th:field="*{employmentStartDate}"/> </p>
-        <p>Должность: <input type="text" th:field="*{post}"/></p>
-        <p>Организация: <input type="text" th:field="*{organizationName}"/> </p>
+        <p>Имя: <input type="text" th:field="*{customer.name}" /></p>
+        <p>Фамилия: <input type="text" th:field="*{customer.surname}" /></p>
+        <p>Отчество: <input type="text" th:field="*{customer.patronymic}"/></p>
+        <p>
+            Семейное положение:
+            <select th:feild="*{customer.maritalStatus}">
+                <option th:each="maritalStatusOption : ${T(ru.testtask.lender.types.MaritalStatus).values()}"
+                        th:value="${maritalStatusOption}" th:text="${maritalStatusOption.displayValue}"></option>
+            </select>
+        </p>
+        <p>Номер паспорта: <input type="text" th:field="*{customer.passportNumber}"/></p>
+        <p>Адрес: <input type="text" th:field="*{customer.address}"/></p>
+        <p>Номер телефона: <input type="text" th:field="*{customer.phoneNumber}" /></p>
+        <p>Дата начала работы: <input type="date" th:field="*{customer.employmentStartDate}"/> </p>
+        <p>Должность: <input type="text" th:field="*{customer.post}"/></p>
+        <p>Название организации: <input type="text" th:field="*{customer.organizationName}"/> </p>
+        <p>Желаемая сумм: <input type="number" th:field="*{loanRequest.desiredLoanAmount}"/></p>
         <p><input type="submit" value="Submit" /> </p>
     </form>
 </body>

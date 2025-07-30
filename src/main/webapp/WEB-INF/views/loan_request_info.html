@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lender: запрос на кредит</title>
+</head>
+<body>
+    <h1 th:text="'О заявкe: ' + ${loanRequest.id}" />
+    <p th:text="'Заявка #' + ${loanRequest.id} + ' от пользователья #'+${loanRequest.customer.id} + ' в состоянии ' + ${loanRequest.loanRequestStatus}" />
+
+</body>
+</html>

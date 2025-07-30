@@ -5,9 +5,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
+import ru.testtask.lender.types.LoanRequestStatus;
 import ru.testtask.lender.types.MaritalStatus;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -34,28 +38,26 @@ public class Customer {
     private String post;
     private String organizationName;
 
-    public Customer() { }
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.PERSIST)
+    private Set<LoanRequest> loanRequests;
 
-    public Customer(
-            String name,
-            String surname,
-            String patronymic,
-            MaritalStatus maritalStatus,
-            long passportNumber,
-            String address,
-            String phoneNumber,
-            Date employmentStartDate,
-            String post,
-            String organizationName) {
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-        this.maritalStatus = maritalStatus;
-        this.passportNumber = passportNumber;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.employmentStartDate = employmentStartDate;
-        this.post = post;
-        this.organizationName = organizationName;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.PERSIST)
+    private Set<LoanContract> loanContracts;
+
+    public Customer() { }
+    public LoanRequest addLoanRequest(LoanRequest loanRequest) {
+        if (loanRequests == null) {
+            loanRequests = new HashSet<LoanRequest>();
+        }
+        loanRequests.add(loanRequest.setCustomer(this));
+        return loanRequest;
+    }
+
+    public void addLoanContract(LoanContract loanContract){
+        if (loanContracts == null) {
+            loanContracts = new HashSet<LoanContract>();
+        }
+        loanContract.setCustomer(this);
+        loanContracts.add(loanContract);
     }
 }

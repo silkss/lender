@@ -3,7 +3,7 @@ package ru.testtask.lender.config;
 import org.hibernate.SessionFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import ru.testtask.lender.models.Customer;
+import ru.testtask.lender.models.*;
 
 @Configuration
 public class HibernateConfiguration {
@@ -14,6 +14,8 @@ public class HibernateConfiguration {
 
         configuration
                 .addAnnotatedClass(Customer.class)
+                .addAnnotatedClass(LoanRequest.class)
+                .addAnnotatedClass(LoanContract.class)
                 .addPackage("ru.testtask.lender")
                 .setProperty("hibernate.connection.driver_class", "org.postgresql.Driver")
                 .setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/postgres")

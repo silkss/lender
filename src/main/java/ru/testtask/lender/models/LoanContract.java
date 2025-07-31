@@ -2,11 +2,16 @@ package ru.testtask.lender.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import ru.testtask.lender.types.LoanContractStatus;
 
 import java.math.BigDecimal;
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "loan_contracts")
 public class LoanContract {
@@ -17,6 +22,10 @@ public class LoanContract {
     private int loanPeriodInDays;
     private BigDecimal loanAmount;
     private LoanContractStatus loanContractStatus;
+    
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date signDate;
+
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
     private Customer customer;
@@ -24,28 +33,23 @@ public class LoanContract {
     @OneToOne(mappedBy = "loanContract")
     private LoanRequest loanRequest;
 
-    public LoanContract setLoanPeriodInDays(int loanPeriodInDays){
+    public LoanContract() { }
+    public LoanContract(
+        int loanPeriodInDays,
+        BigDecimal loanAmount,
+        LoanContractStatus loanContractStatus,
+        Customer customer,
+        LoanRequest loanRequest
+    ) {
         this.loanPeriodInDays = loanPeriodInDays;
-        return this;
-    }
-
-    public LoanContract setLoanAmount(BigDecimal loanAmount) {
         this.loanAmount = loanAmount;
-        return this;
-    }
-
-    public LoanContract setLoanContractStatus(LoanContractStatus loanContractStatus) {
         this.loanContractStatus = loanContractStatus;
-        return this;
-    }
-
-    public LoanContract setCustomer(Customer customer) {
         this.customer = customer;
-        return this;
+        this.loanRequest = loanRequest;
     }
 
-    public LoanContract setLoanRequest(LoanRequest loanRequest) {
-        this.loanRequest = loanRequest;
-        return this;
+    public void signContract() {
+        this.loanContractStatus = LoanContractStatus.SIGNED;
+        this.signDate = new Date();
     }
 }

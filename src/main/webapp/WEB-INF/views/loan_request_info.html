@@ -5,8 +5,31 @@
     <title>Lender: запрос на кредит</title>
 </head>
 <body>
-    <h1 th:text="'О заявкe: ' + ${loanRequest.id}" />
-    <p th:text="'Заявка #' + ${loanRequest.id} + ' от пользователья #'+${loanRequest.customer.id} + ' в состоянии ' + ${loanRequest.loanRequestStatus}" />
+    <nav>
+        <div th:insert="~{navigation :: nav}"></div>
+    </nav>
 
+    <h2 th:text="'Заявка номер #' + ${loanRequest.id}"/>
+    <p th:text="'Желаемая сумма: '+${loanRequest.desiredLoanAmount}"/>
+
+    <div th:switch="${loanRequest.loanRequestStatus}">
+        <div th:case="${T(ru.testtask.lender.types.LoanRequestStatus).APPROVED}">
+            <p>Oдобрена </p>
+            <p th:text="'Одобренная сумма: ' + ${loanRequest.loanContract.loanAmount}"/>
+            <p th:text="'Срок кредита (в днях): ' + ${loanRequest.loanContract.loanPeriodInDays}"/>
+            <a th:href="'/lender/loan/contract/' + ${loanRequest.loanContract.id}"/>Подписать</a>
+        </div>
+
+        <div th:case="${T(ru.testtask.lender.types.LoanRequestStatus).DECLINED}">
+            Отклонена
+        </div>
+    </div>  
+
+    <h2>От пользователя</h2>
+    <p th:text="'Имя: ' + ${loanRequest.customer.name}" />
+    <p th:text="'Фамилия: ' + ${loanRequest.customer.surname}" />
+    <p th:text="'Отчество: ' + ${loanRequest.customer.patronymic}"/>
+    <p th:text="'Номер паспорта: ' + ${loanRequest.customer.passportNumber}"/>
+    <p th:text="'Номер телефона: ' + ${loanRequest.customer.phoneNumber}"/>
 </body>
 </html>

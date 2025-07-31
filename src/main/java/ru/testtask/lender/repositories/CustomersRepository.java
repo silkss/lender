@@ -8,12 +8,8 @@ import ru.testtask.lender.models.Customer;
 import java.util.List;
 
 @Repository
-public class CustomersRepository {
-    private final SessionFactory sessionFactory;
-
-    public CustomersRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+public class CustomersRepository extends BaseRepository<Customer> {
+    public CustomersRepository(SessionFactory sessionFactory) { super(sessionFactory); }
 
     public List<Customer> getAll() {
         Session session = sessionFactory.openSession();
@@ -23,15 +19,7 @@ public class CustomersRepository {
         session.close();
         return customers;
     }
-
-    public void add(Customer item) {
-        Session session = sessionFactory.openSession();
-
-        session.beginTransaction();
-        session.persist(item);
-        session.getTransaction().commit();
-
-        session.close();
-    }
-
+    
+    @Override
+    public Customer getById(long id) { return getById(Customer.class, id); }
 }

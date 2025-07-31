@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Lender: Договор #' + ${contract.id}"/>
+</head>
+<body>
+  <nav>
+    <div th:insert="~{navigation :: nav}"></div>
+  </nav>
+
+  <h2 th:text="'Договор #' + ${contract.id}"/>
+    <div th:switch="${contract.loanContractStatus}">
+        <span th:case="${T(ru.testtask.lender.types.LoanContractStatus).UNSIGNED}">
+            <a th:href="'/lender/loan/contract/' + ${contract.id} + '/sign'"/>Подписать</a>
+        </span>
+        
+        <span th:case="${T(ru.testtask.lender.types.LoanContractStatus).SIGNED}">
+            <p th:text="'Подписан: '${contract.signDate}">
+        </span>
+    </div>
+    <p th:text="'Одобренная сумма: ' + ${contract.loanAmount}"/>
+    <p th:text="'Срок кредита (в днях): ' + ${contract.loanPeriodInDays}"/>
+
+    
+  <h2 th:text="'Заявка #' + ${contract.loanRequest.id}"></h2>
+    <p th:text="'Желаемая сумма: '+${contract.loanRequest.desiredLoanAmount}"/>
+
+  <h2>пользователь</h2>
+    <p th:text="'Имя: ' + ${contract.customer.name}" />
+    <p th:text="'Фамилия: ' + ${contract.customer.surname}" />
+    <p th:text="'Отчество: ' + ${contract.customer.patronymic}"/>
+    <p th:text="'Номер паспорта: ' + ${contract.customer.passportNumber}"/>
+    <p th:text="'Номер телефона: ' + ${contract.customer.phoneNumber}"/>
+</body>
+</html>

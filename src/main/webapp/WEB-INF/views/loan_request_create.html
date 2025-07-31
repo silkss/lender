@@ -5,6 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+    <nav>
+        <div th:insert="~{navigation :: nav}"></div>
+    </nav>
+
     <h1>Cоздать запрос на кредит.</h1>
     <form action="#" th:action="@{/loan/request/create}" th:object="${loanRequestDto}" method="post">
         <p>Имя: <input type="text" th:field="*{customer.name}" /></p>

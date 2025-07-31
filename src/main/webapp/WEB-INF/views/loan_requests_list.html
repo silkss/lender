@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lender: Список одобренных заявок.</title>
+</head>
+<body>
+    <nav>
+        <div th:insert="~{navigation :: nav}"></div>
+    </nav>
+
+    <h1>Список одобренных заявок.</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>имя</th>
+                <th>фамилия</th>
+                <th>отчество</th>
+                <th>номер паспорта</th>
+                <th>номер телефона</th>
+                <th>желаемая сумма кредита</th>
+                <th>статус</th>
+                <th>номер договора.</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="request: ${requests}">
+                <td th:text="${request.customer.name}" />
+                <td th:text="${request.customer.surname}" />
+                <td th:text="${request.customer.patronymic}" />
+                <td th:text="${request.customer.passportNumber}" />
+                <td th:text="${request.customer.phoneNumber}" />
+                <td th:text="${request.desiredLoanAmount}" />
+                <td th:text="${request.loanRequestStatus}" />
+
+                <td th:switch="${request.LoanRequestStatus}">
+                    <span th:case="${T(ru.testtask.lender.types.LoanRequestStatus).APPROVED}">
+                        <a th:href="'/lender/loan/contract/' + ${request.loanContract.id}"
+                            th:text="${request.loanContract.id}"/>
+                    </span>
+                    <span th:case="${T(ru.testtask.lender.types.LoanRequestStatus).DECLINED}">
+                        -
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

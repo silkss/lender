@@ -1,9 +1,12 @@
 package ru.testtask.lender.repositories;
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 import ru.testtask.lender.models.LoanRequest;
+import ru.testtask.lender.types.LoanRequestStatus;
 
 @Repository
 public class LoanRequestRepository {
@@ -20,4 +23,14 @@ public class LoanRequestRepository {
         return loanRequest;
     }
 
+    public List<LoanRequest> getApprovedRequests(){
+        Session session = sessionFactory.openSession();
+        List<LoanRequest> requests = session
+            .createQuery("FROM LoanRequest where loanRequestStatus = :status", LoanRequest.class)
+            .setParameter("status", LoanRequestStatus.APPROVED)
+            .getResultList();
+            
+        session.close();
+        return requests;
+    }
 }

@@ -22,4 +22,30 @@ public class CustomersRepository extends BaseRepository<Customer> {
     
     @Override
     public Customer getById(long id) { return getById(Customer.class, id); }
+
+    public List<Customer> getBy(
+        String name,
+        String surname,
+        String patronymic,
+        long passportnumber,
+        String phoneNumber) {
+        StringBuilder query = new StringBuilder("from ContactEntity ");
+
+        if (name != null) {
+            query.append(" where name = '" + name + "'");
+        }
+        if (surname != null) {
+            query.append(" where surname = '" + surname + "'");
+        }
+        if (patronymic!= null) {
+            query.append(" where patronymic = '" + patronymic + "'");
+        }
+
+        Session session = sessionFactory.openSession();
+        List<Customer> customers = session
+            .createQuery(query.toString(), Customer.class)
+            .getResultList();
+
+        return customers;
+    }
 }

@@ -5,9 +5,9 @@
     <title>Lender: All Loan Contracts</title>
 </head>
 <body>
-  <nav>
-    <div th:insert="~{navigation :: nav}"></div>
-  </nav>
+    <nav>
+        <div th:insert="~{navigation :: nav}"></div>
+    </nav>
     <table>
     <thead>
         <tr>
@@ -20,8 +20,10 @@
         <tr th:each="contract: ${contracts}">
             <td th:text="${contract.id}"/>
             <td th:text="${contract.customer.name} + ' ' + ${contract.customer.surname} + ' ' + ${contract.customer.patronymic}"/>
-            <td th:text="${contract.LoanContractStatus}"/>
-        
+            <td th:text="${contract.loanContractStatus}"/>
+            <td th:text="${contract.loanRequest.desiredLoanAmount}"/>
+            <td th:text="${contract.loanAmount}"/>
+            <td th:text="${contract.loanPeriodInDays}"/>
             <td th:switch="${contract.loanContractStatus}">
                 <span th:case="${T(ru.testtask.lender.types.LoanContractStatus).UNSIGNED}">
                     <a th:href="'/lender/loan/contract/' + ${contract.id} + '/sign'"/>Подписать</a>

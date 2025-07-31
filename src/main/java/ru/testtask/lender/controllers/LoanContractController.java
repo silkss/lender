@@ -1,5 +1,6 @@
 package ru.testtask.lender.controllers;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import ru.testtask.lender.models.LoanContract;
 import ru.testtask.lender.repositories.LoanContractRepository;
+import ru.testtask.lender.types.LoanContractStatus;
 
 @Controller
 @RequestMapping("/loan/contract")
@@ -27,6 +29,13 @@ public class LoanContractController {
         model.addAttribute("contracts", contracts);
         return "loan_contracts_list";
     }
+    
+    @GetMapping("/signed")
+    public String getSigned(Model model) {
+        List<LoanContract> contracts = loanContractRepository.getSigned();
+        model.addAttribute("contracts", contracts);
+        return "loan_contracts_list";
+    }
 
     @GetMapping("/{id}")
     public String getLoanRequestById(@PathVariable("id") long id, Model model) {
@@ -38,9 +47,10 @@ public class LoanContractController {
     @GetMapping("/{id}/sign")
     public String signContract(@PathVariable("id") long id, Model model) {
         LoanContract contract = loanContractRepository.getById(id);
-        contract.signContract();
+        contract.setLoanContractStatus(LoanContractStatus.SIGNED);
+        contract.setSignDate(new Date());
+        // contract.signContract();
         loanContractRepository.update(contract);
-        model.addAttribute("contract", contract);
-        return "loan_contract_info";
+        return "redirect:/locan/contract/" + contract.getId();
     }
 }

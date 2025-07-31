@@ -16,7 +16,7 @@
         </span>
         
         <span th:case="${T(ru.testtask.lender.types.LoanContractStatus).SIGNED}">
-            <p th:text="'Подписан: '${contract.signDate}">
+            <p th:text="'Подписан: ' + ${contract.signDate}">
         </span>
     </div>
     <p th:text="'Одобренная сумма: ' + ${contract.loanAmount}"/>
